@@ -1,22 +1,27 @@
 package model.entity;
 
-import java.util.Scanner;
-
 public class MenuItem {
     private int id;
     private String name;
     private double price;
-    private String category;
+    private String type;
     private int stockQuantity;
 
     public MenuItem() {
     }
 
-    public MenuItem(int id, String name, double price, String category, int stockQuantity) {
+    public MenuItem(String name, double price, String type, int stockQuantity) {
+        this.name = name;
+        this.price = price;
+        this.type = type;
+        this.stockQuantity = stockQuantity;
+    }
+
+    public MenuItem(int id, String name, double price, String type, int stockQuantity) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.category = category;
+        this.type = type;
         this.stockQuantity = stockQuantity;
     }
 
@@ -44,12 +49,12 @@ public class MenuItem {
         this.price = price;
     }
 
-    public String getCategory() {
-        return category;
+    public String getType() {
+        return type;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getStockQuantity() {

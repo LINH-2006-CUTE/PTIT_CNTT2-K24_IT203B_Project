@@ -16,9 +16,9 @@ public class DBConnection {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(URL, USER, PASS);
 
-            if (conn != null) {
-                System.out.println("Kết nối thành công tới database!");
-            }
+//            if (conn != null) {
+//                System.out.println("Kết nối thành công tới database!");
+//            }
         } catch (ClassNotFoundException e) {
             System.err.println("Không tìm thấy Driver MySQL: " + e.getMessage());
         } catch (SQLException e) {
