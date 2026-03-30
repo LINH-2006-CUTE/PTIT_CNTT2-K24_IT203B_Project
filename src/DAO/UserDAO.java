@@ -37,14 +37,14 @@ public class UserDAO {
 
     // đăng nhập
     public User login(String username, String password) {
-        String hashedPassword = PasswordHasher.hashPassword(password);
+//        String hashedPassword = PasswordHasher.hashPassword(password);
         String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, username);
-            ps.setString(2, hashedPassword);
+            ps.setString(2, password);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {

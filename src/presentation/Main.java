@@ -42,7 +42,7 @@ public class Main {
 
     // nhập vai trò
     public static void main(String[] args) {
-            int choice;
+        int choice;
         do {
             System.out.println("=== HỆ THỐNG QUẢN LÝ NHÀ HÀNG ===");
             System.out.println("Chọn vai trò:");
@@ -59,9 +59,10 @@ public class Main {
                     break;
                 case 2:
                     managerRole();
+//                    showManagerMenu();
                     break;
                 case 3:
-                    // vai tro nha bep
+                    chefRole();
                     break;
                 case 4:
                     System.out.println("Thoát chương trình");
@@ -75,12 +76,13 @@ public class Main {
     // phân quyền
     private static boolean loginAndCheckRole(String requiredRole) {
         System.out.print("Username: ");
-        String user = scanner.nextLine();
+        String user = scanner.nextLine().trim();
         System.out.print("Password: ");
-        String pass = scanner.nextLine();
+        String pass = scanner.nextLine().trim();
         currentUser = userService.login(user, pass);
 
         if (currentUser != null) {
+
             if (currentUser.getRole().equalsIgnoreCase(requiredRole)) {
                 System.out.println("Đăng nhập thành công");
                 return true;
@@ -201,7 +203,7 @@ public class Main {
                     if (currentTableId == -1) {
                         System.out.println("Phải chọn bàn thì mới được chọn món");
                     } else {
-                        System.out.println("Bàn"+ currentTableId + "gọi món");
+                        System.out.println("Bàn" + currentTableId + "gọi món");
                         menu.getAllMenuItems().forEach(m -> System.out.println("ID: " + m.getId() + " - " + m.getName()));
 
                         System.out.print("Chọn ID món: ");
@@ -276,26 +278,74 @@ public class Main {
 
     // Quản lý Menu của Quản lý
     private static void manageMenuItems() {
-        System.out.println("=== Quản lý thực đơn ===");
-        System.out.println("1. Xem danh sách");
-        System.out.println("2. Thêm món mới");
-        System.out.print("Chọn: ");
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-        if (choice == 1) {
-            menu.getAllMenuItems().forEach(item ->
-                    System.out.printf("ID: %d | %s | Giá: %.2f | Kho: %d",
-                            item.getId(), item.getName(), item.getPrice(), item.getStockQuantity()));
-        } else if (choice == 2) {
-            System.out.print("Tên món: ");
-            String name = scanner.nextLine();
-            System.out.print("Giá: ");
-            double price = scanner.nextDouble();
-            System.out.print("Số lượng: ");
-            int stock = scanner.nextInt();
+        int choice;
+        do {
+            System.out.println("\n=== QUẢN LÝ THỰC ĐƠN (CRUD) ===");
+            System.out.println("1. Xem danh sách món");
+            System.out.println("2. Thêm món mới");
+            System.out.println("3. Cập nhật thông tin món");
+            System.out.println("4. Xóa món");
+            System.out.println("5. Quay lại");
+            System.out.print("Chọn: ");
+            choice = scanner.nextInt();
             scanner.nextLine();
-            menu.addMenuItem(name, price, "FOOD", stock);
-        }
+            switch (choice) {
+                case 1:
+                    System.out.println("Danh sách món ăn:");
+                    menu.getAllMenuItems().forEach(item ->
+                            System.out.printf("ID: %-3d | %-20s | Giá: %,.0f | Kho: %d\n",
+                                    item.getId(), item.getName(), item.getPrice(), item.getStockQuantity()));
+                    break;
+                case 2:
+                    System.out.println("\n--- THÊM MÓN MỚI ---");
+                    System.out.print("Tên món: ");
+                    String name = scanner.nextLine();
+
+                    System.out.print("Giá tiền: ");
+                    double price = scanner.nextDouble();
+
+                    System.out.print("Số lượng nhập kho: ");
+                    int stock = scanner.nextInt();
+                    scanner.nextLine();
+
+                    menu.addMenuItem(name, price,"FOOD", stock);
+                    break;
+
+                case 3:
+                    System.out.println("--- Cập nhật món ăn ---");
+                    System.out.println("Nhập ID món ăn muốn cập nhật:");
+                    int up = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.print("Nhập tên mới: ");
+                    String newName = scanner.nextLine();
+
+                    System.out.print("Nhập giá mới: ");
+                    double newPrice = scanner.nextDouble();
+
+                    System.out.print("Nhập số lượng kho mới: ");
+                    int newStock = scanner.nextInt();
+                    scanner.nextLine();
+                    if (menu.updateMenuItem(up, newName, newPrice, newStock)) {
+                        System.out.println("Cập nhật món ăn thành công");
+                    } else {
+                        System.out.println("Không  tìm thấy ID món");
+                    }
+                    break;
+
+                case 4:
+                    System.out.println("\n--- XÓA MÓN ĂN ---");
+                    System.out.print("Nhập ID món muốn xóa: ");
+                    int idDel = scanner.nextInt();
+                    scanner.nextLine();
+                    menu.deleteMenuItem(idDel);
+                    break;
+
+                case 5:
+                    System.out.println("Thoát");
+                default:
+                    System.out.println("Nhập lại");
+            }
+        } while (choice != 5);
     }
 
     // Quản lý bàn của Quản lý
@@ -331,10 +381,44 @@ public class Main {
     }
 
     /// /////////////////////////////////////////////////////////////////////
-    // chức năng của Đầu bếp
-    private static void showChefMenu() {
-        System.out.println("\n=== KHU VỰC NHÀ BẾP ===");
-        System.out.println("1. Danh sách món đang chờ");
+    ///
+    // đăng  nhập của chef
+    // Vai trò đầu bếp
+    private static void chefRole() {
+        System.out.println("\n=== ĐĂNG NHẬP ĐẦU BẾP ===");
+        System.out.println("1. Đăng nhập");
+        System.out.println("2. Quay lại");
+        System.out.print("Chọn: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        if (choice == 1) {
+            if (loginAndCheckRole("CHEF")) {
+                showChefMenu();
+            }
+        }
     }
-    // đăng nhập của đầu bếp
+    // chức năng của Đầu bếp
+    public static final service.ChefService chefService = new service.ChefService();
+    private static void showChefMenu() {
+        int choice;
+        do {
+            System.out.println("\n=== KHU VỰC NHÀ BẾP ===");
+            System.out.println("1. Xem danh sách món cần nấu");
+            System.out.println("2. Cập nhật trạng thái món (Đang nấu/Xong)");
+            System.out.println("3. Đăng xuất");
+            System.out.print("Chọn: ");
+            choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("qbc");
+                    break;
+                case 2:
+                    System.out.println("abc");
+                    break;
+            }
+        } while (choice != 3);
+    }
 }

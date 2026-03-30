@@ -51,7 +51,7 @@ public class MenuItemDAO {
         return 0;
     }
 
-    //  cập nhật món
+    //  cập nhật số  lượng tồn kho
     public boolean updateStock(int menuItemId, int newQuantity) {
         String sql = "UPDATE menu_items SET stock_quantity = ? WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -66,6 +66,25 @@ public class MenuItemDAO {
             }
         } catch (SQLException e) {
             System.out.println("Lỗi cập nhật kho: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // cập nhật món
+    public boolean update(MenuItem item) {
+        String sql = "UPDATE menu_items SET name = ?, price = ?, type = ?, stock_quantity = ? WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, item.getName());
+            ps.setDouble(2, item.getPrice());
+            ps.setString(3, item.getType());
+            ps.setInt(4, item.getStockQuantity());
+            ps.setInt(5, item.getId());
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.out.println("Lỗi SQL khi cập nhật món ăn: " + e.getMessage());
             return false;
         }
     }

@@ -31,7 +31,16 @@ public class MenuItemService {
             System.out.println("Thêm món thất bại");
         }
     }
+    // update món ăn
+    public boolean updateMenuItem(int id, String name, double price, int stock) {
+        if (name == null || name.isEmpty() || price <= 0) {
+            return false;
+        }
+        MenuItem item = new MenuItem(id, name, price, "FOOD", stock);
+        return menuItemDAO.update(item);
+    }
 
+    // xoas mon
     public void deleteMenuItem(int id) {
         if (menuItemDAO.delete(id)) {
             System.out.println("Đã xóa món ăn");
