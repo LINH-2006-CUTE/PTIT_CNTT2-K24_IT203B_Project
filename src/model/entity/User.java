@@ -3,11 +3,13 @@ package model.entity;
 public class User {
     private int id;
     private String username;
+    private String fullName; // Thêm biến này vào
     private String role;
 
-    public User(int id, String username, String role) {
+    public User(int id, String username, String fullName, String role) {
         this.id = id;
         this.username = username;
+        this.fullName = fullName;
         this.role = role;
     }
 
@@ -17,6 +19,10 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
     public String getRole() {

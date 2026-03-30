@@ -11,12 +11,6 @@ public class UserService {
             System.out.println("Tài khoản và mật khẩu không được để trống");
             return false;
         }
-
-//        if (userDAO.register(username, password, fullName)) {
-//            System.out.println("Đăng ký thành công: " + fullName);
-//        } else {
-//            System.out.println("Đăng ký thất bại");
-//        }
         // ktra trùng
         if (userDAO.isUsernameExists(username)) {
             System.out.println("Lỗi: Tên đăng nhập '" + username + "' đã tồn tại!");

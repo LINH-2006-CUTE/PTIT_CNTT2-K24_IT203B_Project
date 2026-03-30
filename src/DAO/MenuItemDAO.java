@@ -123,7 +123,7 @@ public class MenuItemDAO {
                 ));
             }
         } catch (SQLException e) {
-            System.out.println("Loi");
+            System.out.println("Loi"+ e.getMessage());
         }
         return list;
     }

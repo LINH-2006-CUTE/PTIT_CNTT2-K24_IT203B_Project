@@ -12,6 +12,7 @@ public class TableService {
         return tableDAO.getAll();
     }
 
+    // thêm bàn
     public void addTable(int tableNumber, int capacity) {
         if (tableNumber <= 0) {
             System.out.println("Số bàn phải lớn hơn 0");
@@ -29,7 +30,13 @@ public class TableService {
             System.out.println("Không thêm được bàn ");
         }
     }
+
     public boolean isTableFree(int tableId) {
         return tableDAO.isTableFree(tableId);
+    }
+
+    // đổi trạng thái bàn
+    public boolean updateStatus(int tableId, String newStatus) {
+        return tableDAO.updateStatus(tableId, newStatus);
     }
 }

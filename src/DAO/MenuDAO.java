@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class MenuDAO {
     public boolean addMenu(MenuItem item) {
-        String sql = "Insert Menu menuItem (name. price,stock_quantity, category) Value (?,?,?,?)";
+        String sql = "INSERT INTO menu_items (name, price, stock_quantity, type) VALUES (?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pre = conn.prepareStatement(sql)) {
             pre.setString(1, item.getName());
@@ -22,5 +22,4 @@ public class MenuDAO {
             return false;
         }
     }
-
 }
