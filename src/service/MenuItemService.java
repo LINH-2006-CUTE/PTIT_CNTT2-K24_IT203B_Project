@@ -37,6 +37,7 @@ public class MenuItemService {
             return false;
         }
         MenuItem item = new MenuItem(id, name, price, "FOOD", stock);
+//        System.out.println("Cập nhật món ăn thành công");
         return menuItemDAO.update(item);
     }
 
