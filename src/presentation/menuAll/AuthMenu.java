@@ -17,28 +17,40 @@ public class AuthMenu {
         if (currentUser != null) {
 
             if (currentUser.getRole().equalsIgnoreCase(requiredRole)) {
-                System.out.println("Đăng nhập thành công");
+                presentation.context.AppContext.currentUser = currentUser;
+                System.out.println(util.AnsiColor.GREEN + "Đăng nhập thành công!" + util.AnsiColor.RESET);
                 return true;
             } else {
-                System.out.println("Lỗi: Bạn không có quyền truy cập vai trò này");
-                currentUser = null;
+                System.out.println(util.AnsiColor.RED + "Lỗi: Bạn không có quyền truy cập vai trò này" + util.AnsiColor.RESET);
+//                currentUser = null;
             }
         } else {
-            System.out.println("Sai thông tin đăng nhập");
+            System.out.println(util.AnsiColor.RED + "Sai thông tin đăng nhập" + util.AnsiColor.RESET);
         }
         return false;
     }
 
     public static void registerCustomer() {
-        System.out.print("Username: ");
-        String username = scanner.nextLine();
-        if (username.isEmpty()) {
+        String username, password, fullName;
 
+        while (true) {
+            System.out.print("Username: ");
+            username = scanner.nextLine().trim();
+            if (username.isEmpty()) {
+                System.out.println(util.AnsiColor.RED + "Tên tài khoản không được để trống!" + util.AnsiColor.RESET);
+            } else break;
         }
-        System.out.print("Password: ");
-        String password = scanner.nextLine();
+
+        while (true) {
+            System.out.print("Password: ");
+            password = scanner.nextLine().trim();
+            if (password.isEmpty()) {
+                System.out.println(util.AnsiColor.RED + "Mật khẩu không được để trống!" + util.AnsiColor.RESET);
+            } else break;
+        }
+
         System.out.print("Họ tên: ");
-        String fullName = scanner.nextLine();
+        fullName = scanner.nextLine().trim();
 
         userService.registerCustomer(username, password, fullName);
     }

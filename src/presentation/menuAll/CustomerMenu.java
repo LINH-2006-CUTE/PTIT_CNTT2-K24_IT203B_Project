@@ -74,21 +74,28 @@ public class CustomerMenu {
                                     item.getName(),
                                     item.getPrice());
                         }
-                        System.out.println("--------------------------------------------------");
                     }
                     break;
 
                 case 2:
                     List<Table> tables = tableService.getAllTables();
                     boolean foundFree = false;
+                    System.out.println("\n--- DANH SÁCH BÀN TRỐNG ---");
+                    System.out.println("---------------------------------------------");
+                    System.out.printf("| %-5s | %-12s | %-15s |\n", "ID", "Số Bàn", "Sức Chứa");
+                    System.out.println("---------------------------------------------");
                     for (Table t : tables) {
                         if (t.getStatus().equals("FREE")) {
-                            System.out.println("ID" + t.getId() + "Số bàn:" + t.getTableNumber() + "còn chứa:" + t.getCapacity());
+                            System.out.printf("| %-5d | %-12s | %-15d |\n",
+                                    t.getId(),
+                                    t.getTableNumber(),
+                                    t.getCapacity());
                             foundFree = true;
                         }
+                        System.out.println("---------------------------------------------");
                     }
                     if (!foundFree) {
-                        System.out.println("Hết bàn trống");
+                        System.out.println(AnsiColor.RED + "Hiện tại nhà hàng đã hết bàn trống!" + AnsiColor.RESET);
 
                     } else {
                         System.out.print("Nhập số bàn muốn ngồi: ");

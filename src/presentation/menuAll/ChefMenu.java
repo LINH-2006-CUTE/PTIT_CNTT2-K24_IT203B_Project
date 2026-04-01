@@ -51,7 +51,7 @@ public class ChefMenu {
                     break;
 
                 case 2:
-                    System.out.print("Nhập ID món muốn cập nhật tiến độ (Ví dụ: 10): ");
+                    System.out.print("Nhập ID món muốn cập nhật tiến độ: ");
                     int idToUpdate = scanner.nextInt();
                     scanner.nextLine();
 
