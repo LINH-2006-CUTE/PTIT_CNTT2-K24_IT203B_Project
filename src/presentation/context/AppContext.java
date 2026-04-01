@@ -11,5 +11,4 @@ public class AppContext {
     public static MenuItemService menuService = new MenuItemService();
     public static TableService tableService = new TableService();
     public static OrderService orderService = new OrderService();
-    public static ChefService chefService = new ChefService();
 }

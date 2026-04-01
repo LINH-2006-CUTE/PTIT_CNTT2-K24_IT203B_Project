@@ -3,7 +3,9 @@ package presentation.menuAll;
 import model.entity.Table;
 
 import java.util.List;
+
 import util.AnsiColor;
+
 import static presentation.context.AppContext.*;
 import static presentation.menuAll.AuthMenu.loginAndCheckRole;
 
@@ -100,7 +102,7 @@ public class ManagerMenu {
                     int newStock = scanner.nextInt();
                     scanner.nextLine();
                     if (menuService.updateMenuItem(up, newName, newPrice, newStock)) {
-                        System.out.println(AnsiColor.GREEN+"Cập nhật món ăn thành công");
+                        System.out.println(AnsiColor.GREEN + "Cập nhật món ăn thành công" + AnsiColor.RESET);
                     } else {
                         System.out.println("Không  tìm thấy ID món");
                     }

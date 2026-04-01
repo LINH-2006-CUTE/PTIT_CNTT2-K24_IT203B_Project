@@ -2,6 +2,7 @@ package presentation.menuAll;
 
 import model.entity.MenuItem;
 import model.entity.Table;
+import util.AnsiColor;
 
 import java.util.List;
 
@@ -45,14 +46,15 @@ public class CustomerMenu {
     public static void showCustomerMenu() {
         int choice;
         int currentTableId = -1;
-        int currentOrderId = -1;
+//        int currentOrderId = -1;
         do {
             System.out.println("\n--- MENU KHÁCH HÀNG ---");
             System.out.println("1. Xem thực đơn");
             System.out.println("2. Chọn bàn");
             System.out.println("3. Gọi món");
             System.out.println("4. Xem trạng thái món đã đặt");
-            System.out.println("5. Đăng xuất");
+            System.out.println("5.Thanh toán hóa đơn");
+            System.out.println("6. Đăng xuất");
             System.out.print("Chọn: ");
             choice = scanner.nextInt();
             scanner.nextLine();
@@ -64,7 +66,7 @@ public class CustomerMenu {
                         System.out.println("Không có món nào ");
                     } else {
                         System.out.println("--------------------------------------------------");
-                        System.out.printf("| %-5s | %-25s | %-12s |\n", "ID", "Tên món", "Giá (VNĐ)");
+                        System.out.printf("| %-5s | %-25s | %-12s |\n", "ID", "Tên món", "Giá ");
                         System.out.println("--------------------------------------------------");
                         for (MenuItem item : items) {
                             System.out.printf("| %-5d | %-30s | %-10f |\n",
@@ -131,16 +133,27 @@ public class CustomerMenu {
                     if (currentTableId == -1) {
                         System.out.println("Bạn chưa chọn bàn");
                     } else {
+                        System.out.println("\n--- Đã chọn bàn: " + currentTableId + " ---");
                         orderService.viewOrder(currentTableId);
                     }
                     break;
                 case 5:
+                    if (currentTableId == -1) {
+                        System.out.println(AnsiColor.RED + "Bạn chưa chọn bàn!!" + AnsiColor.RESET);
+                    } else {
+                        double total = orderService.calculateTableTotal(currentTableId);
+                        System.out.println("--------------------------------");
+                        System.out.printf("TỔNG CỘNG: %,.0f VNĐ\n", total);
+                        System.out.println("--------------------------------");
+                    }
+                    break;
+                case 6:
                     currentUser = null;
                     System.out.println("Đăng xuất");
                     break;
                 default:
                     System.out.println("Chọn lại:");
             }
-        } while (choice != 5);
+        } while (choice != 6);
     }
 }

@@ -1,6 +1,7 @@
 package presentation.menuAll;
 
 import model.entity.User;
+import util.AnsiColor;
 
 import static presentation.context.AppContext.scanner;
 import static presentation.context.AppContext.userService;
@@ -31,6 +32,9 @@ public class AuthMenu {
     public static void registerCustomer() {
         System.out.print("Username: ");
         String username = scanner.nextLine();
+        if (username.isEmpty()) {
+
+        }
         System.out.print("Password: ");
         String password = scanner.nextLine();
         System.out.print("Họ tên: ");
